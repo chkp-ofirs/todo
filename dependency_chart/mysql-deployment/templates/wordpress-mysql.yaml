@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mysql-deployment.fullname" . }}-wordpress-mysql
+  labels:
+    app: wordpress
+  {{- include "mysql-deployment.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.wordpressMysql.type }}
+  selector:
+    app: wordpress
+    tier: mysql
+  {{- include "mysql-deployment.selectorLabels" . | nindent 4 }}
+  ports:
+	{{- .Values.wordpressMysql.ports | toYaml | nindent 2 -}}

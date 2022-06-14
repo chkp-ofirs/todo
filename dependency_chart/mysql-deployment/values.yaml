@@ -1,0 +1,13 @@
+kubernetesClusterDomain: cluster.local
+pvc:
+  mysqlPvClaim:
+    storageRequest: 20Gi
+wordpressMysql:
+  mysql:
+    image:
+      repository: mysql
+      tag: "5.6"
+  ports:
+  - port: 3306
+    targetPort: 0
+  type: ClusterIP

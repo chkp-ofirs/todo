@@ -1,0 +1,13 @@
+kubernetesClusterDomain: cluster.local
+ordpress:
+  ports:
+  - port: 80
+    targetPort: 0
+  type: LoadBalancer
+  wordpress:
+    image:
+      repository: wordpress
+      tag: 4.8-apache
+pvc:
+  pPvClaim:
+    storageRequest: 20Gi

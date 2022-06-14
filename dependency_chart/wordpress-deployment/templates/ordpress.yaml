@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "wordpress-deployment.fullname" . }}-ordpress
+  labels:
+    app: wordpress
+  {{- include "wordpress-deployment.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.ordpress.type }}
+  selector:
+    app: wordpress
+    tier: frontend
+  {{- include "wordpress-deployment.selectorLabels" . | nindent 4 }}
+  ports:
+	{{- .Values.ordpress.ports | toYaml | nindent 2 -}}
