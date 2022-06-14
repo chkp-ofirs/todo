@@ -38,5 +38,5 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ env.artifact_version }}
-          path: ${{ github.workspace }}
+          path: ${{ github.workspace }}/todo/
       
