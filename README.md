@@ -8,7 +8,7 @@
  5. Upload pakcge to museum application: #  curl --data-binary "@todo-0.1.0.tgz" http://localhost:8080/api/charts
  6. Add the URL to your ChartMuseum installation to the local repository list: # helm repo add todo http://localhost:8080
  7. Search for charts: # helm search repo todo
- 8. Install chart: # helm install todo/todo --generate-name
+ 8. Install chart: # helm install todo/todo --generate-name -f https://k8s.io/examples/application/wordpress/mysql-deployment.yaml -f https://k8s.io/examples/application/wordpress/mysql-deployment.yaml
  
  # Expected Results:
 	NAME: todo-1655217341
