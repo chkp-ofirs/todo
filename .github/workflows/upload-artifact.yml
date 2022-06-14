@@ -30,10 +30,13 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+      - name: Retrieve version
+        run: |
+         echo ::set-env name=version::$(cat Chart.yaml | grep -w "version:" |awk '{ print $2 }')
 
       - run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
       - uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.name }}-name
+          name: ${{ env.version }}
           path: ${{ github.workspace }}
       
