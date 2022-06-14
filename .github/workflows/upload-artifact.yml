@@ -17,7 +17,8 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+env:
+      name: todo-0.1.0.tgz
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -33,6 +34,6 @@ jobs:
       - run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
       - uses: actions/upload-artifact@v3
         with:
-          name: todo-0.1.0.tgz
+          name: ${{ env.name }}-name
           path: ${{ github.workspace }}
       
