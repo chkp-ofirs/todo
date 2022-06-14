@@ -9,7 +9,7 @@ on:
       - master
     paths-ignore:
       - '**.md'
-      - '**.yml
+      - '**.yml'
   pull_request:
     paths-ignore:
       - '**.md'
@@ -33,6 +33,6 @@ jobs:
       - run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
       - uses: actions/upload-artifact@v3
         with:
-          name: todo-*.tgz
+          name: todo-0.1.0.tgz
           path: ${{ github.workspace }}
       
