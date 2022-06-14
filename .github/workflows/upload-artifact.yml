@@ -32,11 +32,11 @@ jobs:
       - uses: actions/checkout@v3
       - name: Retrieve version
         run: |
-         echo ::set-env name=version::$(cat Chart.yaml | grep -w "version:" |awk '{ print $2 }')
-
+         artifact_ver=$(cat Chart.yaml | grep -w "version:" |awk '{ print $2 }')
+         echo "artifact_version=$artifact_ver" >> $GITHUB_ENV
       - run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
       - uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.version }}
+          name: ${{ env.artifact_version }}
           path: ${{ github.workspace }}
       
