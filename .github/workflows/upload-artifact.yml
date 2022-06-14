@@ -24,10 +24,10 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      - run: mkdir -p path/to/artifact
+
       - run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
       - uses: actions/upload-artifact@v3
         with:
-          name: todo.tgz
-          path: ${{ github.workspace }}/todo-*.tgz
+          name: todo-*.tgz
+          path: ${{ github.workspace }}
       
