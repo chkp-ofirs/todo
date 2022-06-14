@@ -1,3 +1,5 @@
+[![SourceGuard Code Analysis](https://github.com/chkp-ofirs/todo/actions/workflows/SourceGuard.yml/badge.svg)](https://github.com/chkp-ofirs/todo/actions/workflows/SourceGuard.yml)
+
 # todo
  1. Download and install museum application https://chartmuseum.com/#Instructions
  2. Verify helm chart: # helm install --dry-run --debug . --generate-name
