@@ -2,7 +2,7 @@
  Download and install museum application https://chartmuseum.com/#Instructions
  Verify helm chart: # helm install --dry-run --debug . --generate-name
  Create helm chrt packge: # helm package .
- Start the museum application: # chartmuseum.exe --storage local --storage-local-rootdir . 
+ Start the museum application: # chartmuseum.exe --debug --port=8080 --storage local --storage-local-rootdir . 
  Upload pakcge to museum application: #  curl --data-binary "@todo-0.1.0.tgz" http://localhost:8080/api/charts
  Add the URL to your ChartMuseum installation to the local repository list: # helm repo add todo http://localhost:8080
  Search for charts: # helm search repo todo
