@@ -14,23 +14,12 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-wordpress-deployment:
-  enabled: true
+env:
+  - name: MYSQL_ROOT_PASSWORD
+    value: "base64:0DnoUK8Xqlym5JzBCHPItSobKmVI20IrZdu27Uy9kwI="
 
-mysql-deployment:
-  enabled: true
-  
-password: abcd123  
-
-externalDatabase:
-  ## Database password
-  ##
-  password: ""
-
-# env variables
-variables:
-  secret: {}
-  nonSecret: {}
+overrideValues:
+  MYSQL_ROOT_PASSWORD: "base64:0DnoUK8Xqlym5JzBCHPItSobKmVI20IrZdu27Uy9kwI="
 
 serviceAccount:
   # Specifies whether a service account should be created
