@@ -53,7 +53,7 @@ spec:
         - name: WORDPRESS_DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ "mysql.rootSecretName" }}
+              name: mysql-pass
               key: password
         ports:
         - containerPort: 80

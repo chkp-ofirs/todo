@@ -3,8 +3,8 @@
 # todo
  1. Download and install museum application https://chartmuseum.com/#Instructions
  2. Nevigate to the folder: cd todo
- 3. Set my-sql password: set mysql-pass=Pwssword1!
- 4. Verify helm chart: # helm --upgrade install --dry-run --set mysql-pass=%mysql-pass% --debug todo .
+ 3. Set my-sql password: set mysql-pass="Pwssword1"
+ 4. Verify helm chart: # helm install --dry-run --set variables.secret.WORDPRESS_DB_PASSWORD=password --debug todo .
  5. Create helm chrt packge: # helm package .
  6. Start the museum application: # chartmuseum.exe --debug --port=8080 --storage local --storage-local-rootdir . 
  7. Upload pakcge to museum application: #  curl --data-binary "@todo-0.1.0.tgz" http://localhost:8080/api/charts
