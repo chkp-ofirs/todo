@@ -6,7 +6,7 @@ name: upload-artifact
 on:
   push:
     branches:
-      - master
+      - optionB
     paths-ignore:
       - '**.md'
       - '**.yml'
