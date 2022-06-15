@@ -28,6 +28,7 @@ jobs:
     - name: Build helm chart
       run: |
         export SHELL=/bin/bash
+        eval $(minikube -p minikube docker-env)
         curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
         cd todo
         helm package  . --app-version 0.0.0 --dependency-update --version 0.0.0
@@ -36,6 +37,7 @@ jobs:
     - name: Test service URLs
       run: |
         minikube service list
-        # minikube service todo-wordpress-deployment-ordpress --url
+        eval $(minikube service todo --url)
+        # minikube service todo --url
         # echo "------------------opening the service------------------"
         # curl $(minikube service todo-wordpress-deployment-ordpress --url)        
