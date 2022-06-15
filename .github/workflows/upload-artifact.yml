@@ -34,7 +34,7 @@ jobs:
           SG_SECRET_KEY: ${{ secrets.SG_SECRET_KEY }}
  
   job2:
-    needs: job1
+    #needs: job1
     if: ${{ always() }}
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
