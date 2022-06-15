@@ -21,8 +21,19 @@ env:
       name: todo-0.1.0.tgz
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  job1:
+    runs-on: ubuntu-latest
+    container:
+      image: sourceguard/sourceguard-cli
+    steps:
+      - name: Scan
+        uses: CheckPointSW/sourceguard-action@main
+        with:
+          SG_CLIENT_ID: ${{ secrets.SG_CLIENT_ID }}
+          SG_SECRET_KEY: ${{ secrets.SG_SECRET_KEY }}
+ 
+  job2:
+    needs: job1
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
