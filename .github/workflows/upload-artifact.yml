@@ -23,6 +23,7 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   job1:
+    name: SourceCode Scan
     runs-on: ubuntu-latest
     container:
       image: sourceguard/sourceguard-cli
@@ -32,11 +33,36 @@ jobs:
         with:
           SG_CLIENT_ID: ${{ secrets.SG_CLIENT_ID }}
           SG_SECRET_KEY: ${{ secrets.SG_SECRET_KEY }}
- 
   job2:
-    needs: job1
-    if: ${{ always() }}
+    needs: [job1]
+    runs-on: ubuntu-latest
+    name: build and deploy to minikube
+    steps:
+    - uses: actions/checkout@v2
+    - name: Start minikube
+      uses: medyagh/setup-minikube@master
+    - name: Try the cluster !
+      run: kubectl get pods -A
+    - name: Build helm chart
+      run: |
+        export SHELL=/bin/bash
+        eval $(minikube -p minikube docker-env)
+        curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+        cd todo
+        helm package  . --app-version 0.0.0 --dependency-update --version 0.0.0
+        export mysqlpassword="0DnoUK8Xqlym5JzBCHPItSobKmVI20IrZdu27Uy9kwI="
+        helm upgrade todo ./todo-0.0.0.tgz --install --debug --set MYSQL_ROOT_PASSWORD=%mysqlpassword%
+    - name: Test service URLs
+      run: |
+        minikube service list
+        # minikube service todo --url
+        # echo "------------------opening the service------------------"
+        # curl $(minikube service todo-wordpress-deployment-ordpress --url)        
+  job3:
+    needs: [job1, job2]
+    #if: ${{ always() }}
     # The type of runner that the job will run on
+    name: Pushlish Release
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -46,7 +72,9 @@ jobs:
       - name: Retrieve version
         run: |
          artifact_ver=$(cat Chart.yaml | grep -w "version:" |awk '{ print $2 }')
+         printf -v epoch '%(%s)T' -1
          echo "artifact_version=$artifact_ver" >> $GITHUB_ENV
+         echo "epoch=$epoch" >> $GITHUB_ENV
       - run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
       #- uses: actions/upload-artifact@v3
       #  with:
@@ -54,15 +82,15 @@ jobs:
       #    path: ${{ github.workspace }}/todo/
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
-          zip --junk-paths my-artifact-${{ env.artifact_ver }} *
+          zip --junk-paths my-artifact-${{ env.artifact_version }} *
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref_name	}}-${{ github.run_number }}-${{ github.run_attempt }}
-          release_name: Release ${{ github.ref_name	}}-${{ github.run_number }}-${{ github.run_attempt }}
+          tag_name:  ${{ github.ref_name	}}-${{ env.artifact_version }}-${{ env.epoch }}
+          release_name: Release ${{ github.ref_name	}}-${{ env.artifact_version }}-${{ env.epoch }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
@@ -72,7 +100,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: my-artifact-${{ env.artifact_ver }}.zip
-          asset_name: my-artifact-${{ env.artifact_ver }}.zip
+          asset_path: my-artifact-${{ env.artifact_version }}.zip
+          asset_name: my-artifact-${{ env.artifact_version }}.zip
           asset_content_type: application/zip
    

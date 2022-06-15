@@ -1,0 +1,42 @@
+name: k8s-tests
+# Controls when the workflow will run
+on:
+  push:
+    branches:
+      - optionB
+      - main
+    paths-ignore:
+      - '**.md'
+      - '**.yml'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - '**.yml'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    name: build and deploy to minikube
+    steps:
+    - uses: actions/checkout@v2
+    - name: Start minikube
+      uses: medyagh/setup-minikube@master
+    - name: Try the cluster !
+      run: kubectl get pods -A
+    - name: Build helm chart
+      run: |
+        export SHELL=/bin/bash
+        eval $(minikube -p minikube docker-env)
+        curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+        cd todo
+        helm package  . --app-version 0.0.0 --dependency-update --version 0.0.0
+        export mysqlpassword="0DnoUK8Xqlym5JzBCHPItSobKmVI20IrZdu27Uy9kwI="
+        helm upgrade todo ./todo-0.0.0.tgz --install --debug --set MYSQL_ROOT_PASSWORD=%mysqlpassword%
+    - name: Test service URLs
+      run: |
+        minikube service list
+        # minikube service todo --url
+        # echo "------------------opening the service------------------"
+        # curl $(minikube service todo-wordpress-deployment-ordpress --url)        
