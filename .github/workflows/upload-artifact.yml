@@ -71,7 +71,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Retrieve version
         run: |
-         artifact_ver=$(cat Chart.yaml | grep -w "version:" |awk '{ print $2 }')
+         artifact_ver=$(cat todo\Chart.yaml | grep -w "version:" |awk '{ print $2 }')
          printf -v epoch '%(%s)T' -1
          echo "artifact_version=$artifact_ver" >> $GITHUB_ENV
          echo "epoch=$epoch" >> $GITHUB_ENV
