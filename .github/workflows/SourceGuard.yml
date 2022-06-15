@@ -1,15 +1,8 @@
 name: SourceGuard Code Analysis
 on:
-  push:
-    branches:
-      - master
-    paths-ignore:
-      - '**.md'
-      - '**.yml'
-  pull_request:
-    paths-ignore:
-      - '**.md'
-      - '**.yml'
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '30 5,17 * * *'
 jobs:
   code-analysis:
     runs-on: ubuntu-latest
