@@ -18,7 +18,7 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-latest
-    name: build example and deploy to minikube
+    name: build and deploy to minikube
     steps:
     - uses: actions/checkout@v2
     - name: Start minikube
@@ -36,6 +36,6 @@ jobs:
     - name: Test service URLs
       run: |
         minikube service list
-        minikube service todo-wordpress-deployment-ordpress --url
-        echo "------------------opening the service------------------"
-        curl $(minikube service todo-wordpress-deployment-ordpress --url)        
+        # minikube service todo-wordpress-deployment-ordpress --url
+        # echo "------------------opening the service------------------"
+        # curl $(minikube service todo-wordpress-deployment-ordpress --url)        
