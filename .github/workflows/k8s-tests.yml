@@ -36,6 +36,6 @@ jobs:
     - name: Test service URLs
       run: |
         minikube service list
-        minikube service todo --url
+        minikube service todo-wordpress-deployment-ordpress --url
         echo "------------------opening the service------------------"
-        curl $(minikube service todo --url)        
+        curl $(minikube service todo-wordpress-deployment-ordpress --url)        
