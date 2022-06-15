@@ -33,6 +33,7 @@ jobs:
           SG_CLIENT_ID: ${{ secrets.SG_CLIENT_ID }}
           SG_SECRET_KEY: ${{ secrets.SG_SECRET_KEY }}
   job2:
+    needs: [job1]
     runs-on: ubuntu-latest
     name: build and deploy to minikube
     steps:
