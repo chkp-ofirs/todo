@@ -1,4 +1,5 @@
 [![SourceGuard Code Analysis](https://github.com/chkp-ofirs/todo/actions/workflows/SourceGuard.yml/badge.svg)](https://github.com/chkp-ofirs/todo/actions/workflows/SourceGuard.yml)
+[![upload-artifact](https://github.com/chkp-ofirs/todo/actions/workflows/upload-artifact.yml/badge.svg)](https://github.com/chkp-ofirs/todo/actions/workflows/upload-artifact.yml)
 
 # todo
  1. Download and install museum application https://chartmuseum.com/#Instructions
