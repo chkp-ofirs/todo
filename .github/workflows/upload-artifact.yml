@@ -41,7 +41,7 @@ jobs:
       #    path: ${{ github.workspace }}/todo/
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
-          zip --junk-paths my-artifact-${{ github.run_id }}-${{ github.ref_name }} *
+          zip --junk-paths my-artifact-${{ github.run_id }}-${{ github.ref_name }}-${{ github.run_number }} *
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -59,7 +59,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: my-artifact-${{ github.run_id }}-${{ github.ref_name }}.zip
-          asset_name: my-artifact-${{ github.run_id }}-${{ github.ref_name }}.zip
+          asset_path: my-artifact-${{ github.run_id }}-${{ github.ref_name }}-${{ github.run_number }} *
+          asset_name: my-artifact-${{ github.run_id }}-${{ github.ref_name }}-${{ github.run_number }} *
           asset_content_type: application/zip
    
