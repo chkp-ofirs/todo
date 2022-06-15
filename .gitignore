@@ -1,1 +1,4 @@
 *.exe
+todo*.tgz
+*/todo*.tgz
+**.tgz
