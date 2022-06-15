@@ -48,8 +48,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}-${{ github.run_number }}
-          release_name: Release ${{ github.ref }}-${{ github.run_number }}
+          tag_name: ${{ github.head_ref	}}-${{ github.run_number }}-${{ github.run_attempt }}
+          release_name: Release ${{ github.head_ref	}}-${{ github.run_number }}-${{ github.run_attempt }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
