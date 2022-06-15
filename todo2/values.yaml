@@ -22,11 +22,6 @@ mysql-deployment:
   
 password: abcd123  
 
-externalDatabase:
-  ## Database password
-  ##
-  password: ""
-
 # env variables
 variables:
   secret: {}

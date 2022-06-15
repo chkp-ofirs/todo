@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "todo.name" -}}
+{{- define "wordpress-deployment.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "todo.fullname" -}}
+{{- define "wordpress-deployment.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -23,27 +23,20 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 {{- end }}
 
-*/}}
-{{/*
-Return the wordpress.databaseSecretName
-*/}}
-{{- define "wordpress.databaseSecretName" -}}
-{{- end -}}
-
-
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "todo.chart" -}}
+{{- define "wordpress-deployment.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
+
 
 {{/*
 Common labels
 */}}
-{{- define "todo.labels" -}}
-helm.sh/chart: {{ include "todo.chart" . }}
-{{ include "todo.selectorLabels" . }}
+{{- define "wordpress-deployment.labels" -}}
+helm.sh/chart: {{ include "wordpress-deployment.chart" . }}
+{{ include "wordpress-deployment.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -53,17 +46,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "todo.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "todo.name" . }}
+{{- define "wordpress-deployment.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "wordpress-deployment.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "todo.serviceAccountName" -}}
+{{- define "wordpress-deployment.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "todo.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "wordpress-deployment.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

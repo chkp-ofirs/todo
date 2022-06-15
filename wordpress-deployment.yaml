@@ -54,7 +54,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mysql-pass
-              key: password
+              key: {{ .mysql-password }}
         ports:
         - containerPort: 80
           name: wordpress

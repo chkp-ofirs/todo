@@ -1,9 +1,0 @@
-dependencies:
-- name: wordpress-deployment
-  repository: file://../dependency_chart/wordpress-deployment
-  version: 0.1.0
-- name: mysql-deployment
-  repository: file://../dependency_chart/mysql-deployment
-  version: 0.1.0
-digest: sha256:e49595cd1db76e3a94620852e19c75c0c80a66743296de4103d3d5493442dfa5
-generated: "2022-06-14T20:16:33.4318631+03:00"
