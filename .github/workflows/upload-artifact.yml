@@ -70,7 +70,9 @@ jobs:
       - name: Retrieve version
         run: |
          artifact_ver=$(cat Chart.yaml | grep -w "version:" |awk '{ print $2 }')
+         printf -v epoch '%(%s)T' -1
          echo "artifact_version=$artifact_ver" >> $GITHUB_ENV
+         echo "epoch=$epoch" >> $GITHUB_ENV
       - run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
       #- uses: actions/upload-artifact@v3
       #  with:
@@ -85,8 +87,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref_name	}}-${{ github.run_number }}-${{ github.run_attempt }}
-          release_name: Release ${{ github.ref_name	}}-${{ github.run_number }}-${{ github.run_attempt }}
+          tag_name:  ${{ github.ref_name	}}-${{ env.artifact_version }}-${{ env.epoch }}
+          release_name: Release ${{ github.ref_name	}}-${{ env.artifact_version }}-${{ env.epoch }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
